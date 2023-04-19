@@ -2,7 +2,7 @@ const express = require('express');
 var cors = require('cors');
 require('dotenv').config();
 const bodyParser = require('body-parser');
-const { graphqlHTTP } = require('express-graphql');
+const { createHandler } = require('graphql-http/lib/use/express');
 const { buildSchema } = require('graphql');
 const mongoose = require('mongoose');
 const port = process.env.PORT || 5000;
@@ -20,7 +20,7 @@ app.use(bodyParser.json());
 
 app.use(
   '/graphql',
-  graphqlHTTP({
+  createHandler({
     schema: buildSchema(`
         type Board {
             _id: ID!
@@ -340,7 +340,6 @@ app.use(
           });
       },
     },
-    graphiql: true,
   })
 );
 
